@@ -4,7 +4,6 @@
 // ============================================================
 module if_stage #(
     parameter MEM_DEPTH = 256          // number of 32-bit words
-    parameter MEM_ADDR_BITS = 8        // log2(MEM_DEPTH)
 )(
     input  logic        clk, rst,
     input  logic        stall,          // from hazard unit
@@ -16,7 +15,7 @@ module if_stage #(
 
     // Address bits needed to index MEM_DEPTH entries
     localparam MEM_ADDR_BITS = $clog2(MEM_DEPTH);
-    
+
     logic [31:0] pc_next;
     logic [31:0] imem [0:MEM_DEPTH-1];
 
@@ -35,7 +34,11 @@ module if_stage #(
             pc_f <= pc_next;
     end
 
-    assign pc_next  = pc_src ? pc_branch : pc_f + 4;
-    assign instr_f  = imem[pc_f[MEM_ADDR_BITS+1:2]];   // word-addressed
+    assign pc_next = pc_src ? pc_branch : pc_f + 4;
+
+    // Word-addressed: drop byte offset bits [1:0], keep MEM_ADDR_BITS
+    /* verilator lint_off WIDTHTRUNC */
+    assign instr_f = imem[pc_f[MEM_ADDR_BITS+1:2]];
+    /* verilator lint_on WIDTHTRUNC */
 
 endmodule
