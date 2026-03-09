@@ -7,7 +7,7 @@
 ![Design](https://img.shields.io/badge/Focus-RTL%20Design-purple)
 
 <p align="center">
-  <img src="docs/atlasrv_logo.png" alt="AtlasRV32 banner">
+  <img src="docs/banner.png" alt="AtlasRV32 banner">
 </p>
 
 A synthesizable, 32-bit RISC-V processor implementing the RV32I base integer instruction set with a classic 5-stage pipeline, full hazard detection, and data forwarding. Synthesized and verified on FPGA.
