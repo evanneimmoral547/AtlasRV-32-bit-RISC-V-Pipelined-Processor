@@ -14,6 +14,9 @@ module if_stage #(
     output logic [31:0] instr_f         // fetched instruction
 );
 
+    // Address bits needed to index MEM_DEPTH entries
+    localparam MEM_ADDR_BITS = $clog2(MEM_DEPTH);
+    
     logic [31:0] pc_next;
     logic [31:0] imem [0:MEM_DEPTH-1];
 
