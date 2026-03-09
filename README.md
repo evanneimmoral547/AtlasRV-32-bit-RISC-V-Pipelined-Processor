@@ -1,4 +1,5 @@
 # AtlasRV32 — 32-bit RISC-V Pipelined Processor
+
 ![ISA](https://img.shields.io/badge/ISA-RISC--V%20RV32I-red)
 ![RTL](https://img.shields.io/badge/RTL-SystemVerilog-orange)
 ![Pipeline](https://img.shields.io/badge/CPU-5--Stage%20Pipeline-green)
@@ -6,7 +7,7 @@
 ![Design](https://img.shields.io/badge/Focus-RTL%20Design-purple)
 
 <p align="center">
-<img src="docs/atlasrv_logo.png" width="450">
+  <img src="docs/atlasrv_logo.png" alt="AtlasRV32 banner">
 </p>
 
 A synthesizable, 32-bit RISC-V processor implementing the RV32I base integer instruction set with a classic 5-stage pipeline, full hazard detection, and data forwarding. Synthesized and verified on FPGA.
@@ -15,14 +16,9 @@ A synthesizable, 32-bit RISC-V processor implementing the RV32I base integer ins
 
 ## Pipeline Architecture
 
-```
-    ┌────┐   ┌────┐   ┌────┐   ┌─────┐   ┌────┐
-    │ IF │──▶│ ID │──▶│ EX │──▶│ MEM │──▶│ WB │
-    └────┘   └────┘   └────┘   └─────┘   └────┘
-      PC       Reg      ALU      DMEM      Mux
-     IMEM     Ctrl     Fwd       R/W      RegWr
-              Imm      Haz
-```
+<p align="center">
+  <img src="docs/Pipeline Architecture.png" alt="Pipeline Architecture">
+</p>
 
 | Stage | Module | Description |
 |-------|--------|-------------|
@@ -52,38 +48,43 @@ A synthesizable, 32-bit RISC-V processor implementing the RV32I base integer ins
 
 Two forwarding paths eliminate most pipeline stalls caused by RAW (Read-After-Write) data hazards:
 
-```
-         ┌──────────────────────────────────────┐
-         │         EX/MEM → EX forward          │
-         │                                      ▼
-  IF ── ID ── EX ── MEM ── WB          EX (forward mux A/B)
-                      │                         ▲
-                      └─────────────────────────┘
-                         MEM/WB → EX forward
-```
+<p align="center">
+  <img src="docs/Data Forwarding.png" alt="Data Forwarding Unit">
+</p>
 
 ### Load-Use Stall
 
 When a load instruction is immediately followed by a dependent instruction, one stall cycle is inserted:
 
-```
-  Cycle:    1     2     3     4     5     6
-  LW  x1:  IF -- ID -- EX -- MEM -- WB
-  ADD x2,x1:    IF -- ID -- ** -- EX  -- MEM -- WB
-                            ↑ stall bubble inserted
-```
+<p align="center">
+  <img src="docs/Load-Use Stall.png" alt="Load-Use Stall Timing">
+</p>
 
 ### Branch Flush
 
 On a taken branch or JAL/JALR, the two incorrectly fetched instructions are flushed:
 
-```
-  Cycle:    1     2     3     4     5
-  BEQ:      IF -- ID -- EX -- MEM -- WB
-  Instr+4:       IF -- ID  ← flush (NOP)
-  Instr+8:            IF   ← flush (NOP)
-  Target:                  IF -- ID -- ...
-```
+<p align="center">
+  <img src="docs/Branch Flush.png" alt="Branch Flush Timing">
+</p>
+
+---
+
+## Supported Instructions
+
+<p align="center">
+  <img src="docs/instruction_formats.png" alt="RV32I Instruction Encoding">
+</p>
+
+| Category | Instructions |
+|----------|-------------|
+| R-type   | ADD, SUB, AND, OR, XOR, SLL, SRL, SRA, SLT, SLTU |
+| I-type   | ADDI, ANDI, ORI, XORI, SLLI, SRLI, SRAI, SLTI, SLTIU |
+| Load     | LW, LH, LB, LHU, LBU |
+| Store    | SW, SH, SB |
+| Branch   | BEQ, BNE, BLT, BGE, BLTU, BGEU |
+| Jump     | JAL, JALR |
+| Upper    | LUI, AUIPC |
 
 ---
 
@@ -107,6 +108,13 @@ AtlasRV32/
 │   └── hazard/
 │       ├── hazard_detection.sv   # Load-use stall + branch flush
 │       └── forwarding_unit.sv    # EX/MEM and MEM/WB forwarding
+├── docs/
+│   ├── atlasrv_logo.png
+│   ├── Pipeline Architecture.png
+│   ├── Data Forwarding.png
+│   ├── Load-Use Stall.png
+│   ├── Branch Flush.png
+│   └── instruction_formats.png
 ├── sim/
 │   ├── tb_top.sv                 # Directed + constrained-random testbench
 │   └── run.do                    # ModelSim compile & wave script
@@ -164,20 +172,6 @@ Synthesis reports are written to `fpga/output/`:
 
 ---
 
-## Supported Instructions
-
-| Category | Instructions |
-|----------|-------------|
-| R-type   | ADD, SUB, AND, OR, XOR, SLL, SRL, SRA, SLT, SLTU |
-| I-type   | ADDI, ANDI, ORI, XORI, SLLI, SRLI, SRAI, SLTI, SLTIU |
-| Load     | LW, LH, LB, LHU, LBU |
-| Store    | SW, SH, SB |
-| Branch   | BEQ, BNE, BLT, BGE, BLTU, BGEU |
-| Jump     | JAL, JALR |
-| Upper    | LUI, AUIPC |
-
----
-
 ## Technologies
 
 - **RTL**: SystemVerilog (IEEE 1800-2017)
@@ -196,5 +190,5 @@ The design targets > 50 MHz after place-and-route on Artix-7. Ideal CPI = 1.0; a
 
 ## Author
 
-**Ismail Hajjy**
+**Ismail Hajjy**  
 **ismailhajjy02@gmail.com**
