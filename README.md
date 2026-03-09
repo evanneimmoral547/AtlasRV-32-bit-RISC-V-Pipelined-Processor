@@ -82,7 +82,7 @@ On a taken branch or JAL/JALR, the two incorrectly fetched instructions are flus
 ## Repository Structure
 
 ```
-riscv-32bit-pipelined-processor/
+AtlasRV32/
 ├── rtl/
 │   ├── alu.sv                    # 32-bit ALU (ADD/SUB/AND/OR/XOR/SLL/SRL/SRA/SLT)
 │   ├── control_unit.sv           # Main decoder + ALU decoder
